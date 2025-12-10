@@ -229,6 +229,7 @@ resource "aws_elastic_beanstalk_environment" "eb_environment" {
 }
 
 # Testing Custom Metrics for CloudWatch Agent
+
 # SNS Topic for Alerts
 resource "aws_sns_topic" "alerts" {
   name = "${var.environment_name}-alerts"
@@ -241,7 +242,7 @@ resource "aws_sns_topic_subscription" "email" {
 }
 
 
-# Scaling policy: add 1 instance
+# Scaling policy: Add instance(s)
 resource "aws_autoscaling_policy" "scale_up" {
   name                   = "${var.environment_name}-scale-up"
   autoscaling_group_name = aws_elastic_beanstalk_environment.eb_environment.autoscaling_groups[0]
@@ -250,7 +251,7 @@ resource "aws_autoscaling_policy" "scale_up" {
   cooldown               = 60
 }
 
-# CloudWatch alarm: triggers both scale-up and SNS notification
+# CloudWatch alarm to trigger scaling events and send notifications
 resource "aws_cloudwatch_metric_alarm" "memory_high" {
   alarm_name          = "${var.environment_name}-memory-utilization-high"
   comparison_operator = "GreaterThanThreshold"
@@ -267,7 +268,6 @@ resource "aws_cloudwatch_metric_alarm" "memory_high" {
 
   alarm_description = "Triggers if memory usage exceeds 60% on average for 2 minutes."
   
-  # Multiple actions: Scale up and send notification
   alarm_actions = [
     aws_autoscaling_policy.scale_up.arn,
     aws_sns_topic.alerts.arn
