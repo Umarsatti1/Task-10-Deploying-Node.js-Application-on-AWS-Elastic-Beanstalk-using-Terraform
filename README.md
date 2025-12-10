@@ -118,34 +118,44 @@ Resources deployed: VPC, subnets, SGs, IAM roles, S3 bucket, EB app & environmen
 
 ## Task 1.5: Validate Infrastructure in AWS Console
 
-**VPC & Networking** – Verify VPC, subnets, IGW, NAT, route tables, and security groups  
+**VPC & Networking**  
+- Verify VPC, subnets, IGW, NAT gateways, route tables, and security groups are created and associated correctly.  
 
-**IAM** – Validate EB service role, EC2 instance role, and instance profile  
+**IAM**  
+- Confirm Elastic Beanstalk service role, EC2 instance role, and instance profile exist with correct policies.  
 
-**Elastic Beanstalk** – Verify application and environment creation  
+**Elastic Beanstalk**  
+- Check application and environment creation, health status, and environment URL.  
 
-**EC2, ALB, Target Groups, ASG** – Confirm instances, load balancer, target groups, and auto scaling group  
+**EC2, ALB, Target Groups, ASG**  
+- Validate EC2 instances, ALB configuration, target group registration, and auto scaling settings.  
 
-**S3** – Confirm `app.zip` uploaded to bucket  
+**S3**  
+- Confirm `app.zip` is uploaded to the S3 bucket.  
 
-**SNS** – Validate topics and email subscriptions  
+**SNS**  
+- Verify topics and email subscriptions are created and confirmed.  
 
-**CloudWatch** – Confirm log groups and alarms for CPU and memory  
+**CloudWatch**  
+- Check log groups exist and CPU/Memory alarms are configured with correct thresholds and actions.
 
 ---
 
-## Task 1.6: Application Testing, Alarm Verification, and Auto Scaling
+## Task 1.6: Application Testing and Auto Scaling
 
-**Test Application:** Open Elastic Beanstalk environment URL and check functionality  
+**Test Application**  
+- Open EB environment URL and ensure the application loads successfully.  
 
-**Validate CloudWatch Email Subscriptions** – Confirm subscription confirmation emails  
+**Validate CloudWatch Subscriptions**  
+- Confirm subscription confirmation emails for CPU and Memory alarms.  
 
-**Connect to EC2 via Session Manager** – Verify instance connectivity  
+**Connect to EC2 via Session Manager**  
+- Verify instance connectivity using Session Manager.  
 
-**Verify CloudWatch Agent** – Check agent status and configuration  
+**Verify CloudWatch Agent**  
+- Check agent is running and configuration includes memory metrics (`mem_used_percent`).  
 
-**Trigger CPU & Memory Alarms:**
-
+**Trigger CPU & Memory Alarms**  
 ```bash
 # CPU
 stress-ng --cpu 0 --cpu-load 90 --timeout 300
@@ -153,14 +163,16 @@ stress-ng --cpu 0 --cpu-load 90 --timeout 300
 # Memory
 sudo stress-ng --vm 1 --vm-bytes 700M --vm-keep --vm-method all --vm-hang 180 -t 180s
 ```
+- Alarms should transition to ALARM when thresholds are crossed.
 
-**Verify Alarm State Changes** – CloudWatch shows OK → ALARM transitions  
+**Verify CloudWatch Agent**  
+- ASG launches new instances when alarms trigger and terminates them when usage normalizes.  
 
-**Validate Auto Scaling Activity** – ASG launches and terminates instances based on load  
+**Verify Target Registration**  
+- Newly launched instances appear healthy in the target group. 
 
-**Verify Target Registration** – Instances appear healthy in target group  
-
-**SNS Email Notifications** – Receive alerts for CPU/Memory utilization and EB environment health  
+**SNS Email Notifications**  
+- Receive alerts for CPU/Memory utilization and EB environment health changes (Ok → Degraded → Ok).
 
 ---
 
