@@ -1,4 +1,4 @@
-# Task 10: Deploying a Simple Node.js Application on AWS Elastic Beanstalk using Terraform
+# Deploying a Simple Node.js Application on AWS Elastic Beanstalk using Terraform
 
 ---
 
@@ -118,33 +118,33 @@ Resources deployed: VPC, subnets, SGs, IAM roles, S3 bucket, EB app & environmen
 
 ## Task 1.5: Validate Infrastructure in AWS Console
 
-**1.5.1 VPC & Networking** – Verify VPC, subnets, IGW, NAT, route tables, and security groups  
+**VPC & Networking** – Verify VPC, subnets, IGW, NAT, route tables, and security groups  
 
-**1.5.2 IAM** – Validate EB service role, EC2 instance role, and instance profile  
+**IAM** – Validate EB service role, EC2 instance role, and instance profile  
 
-**1.5.3 Elastic Beanstalk** – Verify application and environment creation  
+**Elastic Beanstalk** – Verify application and environment creation  
 
-**1.5.4 EC2, ALB, Target Groups, ASG** – Confirm instances, load balancer, target groups, and auto scaling group  
+**EC2, ALB, Target Groups, ASG** – Confirm instances, load balancer, target groups, and auto scaling group  
 
-**1.5.5 S3** – Confirm `app.zip` uploaded to bucket  
+**S3** – Confirm `app.zip` uploaded to bucket  
 
-**1.5.6 SNS** – Validate topics and email subscriptions  
+**SNS** – Validate topics and email subscriptions  
 
-**1.5.7 CloudWatch** – Confirm log groups and alarms for CPU and memory  
+**CloudWatch** – Confirm log groups and alarms for CPU and memory  
 
 ---
 
 ## Task 1.6: Application Testing, Alarm Verification, and Auto Scaling
 
-**1.6.1 Test Application:** Open EB environment URL and check functionality  
+**Test Application:** Open Elastic Beanstalk environment URL and check functionality  
 
-**1.6.2 Validate CloudWatch Email Subscriptions** – Confirm subscription confirmation emails  
+**Validate CloudWatch Email Subscriptions** – Confirm subscription confirmation emails  
 
-**1.6.3 Connect to EC2 via Session Manager** – Verify instance connectivity  
+**Connect to EC2 via Session Manager** – Verify instance connectivity  
 
-**1.6.4 Verify CloudWatch Agent** – Check agent status and configuration  
+**Verify CloudWatch Agent** – Check agent status and configuration  
 
-**1.6.5 Trigger CPU & Memory Alarms:**
+**Trigger CPU & Memory Alarms:**
 
 ```bash
 # CPU
@@ -154,13 +154,13 @@ stress-ng --cpu 0 --cpu-load 90 --timeout 300
 sudo stress-ng --vm 1 --vm-bytes 700M --vm-keep --vm-method all --vm-hang 180 -t 180s
 ```
 
-**1.6.6 Verify Alarm State Changes** – CloudWatch shows OK → ALARM transitions  
+**Verify Alarm State Changes** – CloudWatch shows OK → ALARM transitions  
 
-**1.6.7 Validate Auto Scaling Activity** – ASG launches and terminates instances based on load  
+**Validate Auto Scaling Activity** – ASG launches and terminates instances based on load  
 
-**1.6.8 Verify Target Registration** – Instances appear healthy in target group  
+**Verify Target Registration** – Instances appear healthy in target group  
 
-**1.6.9 SNS Email Notifications** – Receive alerts for CPU/Memory utilization and EB environment health  
+**SNS Email Notifications** – Receive alerts for CPU/Memory utilization and EB environment health  
 
 ---
 
@@ -177,7 +177,7 @@ Removes all resources to prevent unnecessary AWS charges.
 ## Task 1.8: Troubleshooting
 
 **Issue 1:** Invalid ELBScheme  
-- **Solution:** Remove ELBScheme; EB defaults to public ALB  
+- **Solution:** Remove ELBScheme. Elastic Beanstalk defaults to public ALB  
 
 **Issue 2:** Incorrect RootVolumeType  
 - **Solution:** Correct assignment of `volume_type` and `volume_size`  
