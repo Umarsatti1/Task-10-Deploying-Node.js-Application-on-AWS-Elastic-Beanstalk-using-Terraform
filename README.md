@@ -89,7 +89,7 @@ Project root directory contains:
 ### Terraform Directory Files
 
 **main.tf** – Orchestrates modules (VPC, IAM, Elastic Beanstalk)  
-**terraform.tf** – AWS provider + S3 backend configuration  
+**terraform.tf** – AWS provider and S3 backend configuration  
 **variables.tf** – Input variables for all modules  
 **terraform.tfvars** – Environment-specific values  
 **outputs.tf** – Key outputs (VPC ID, EB URL)  
@@ -198,7 +198,7 @@ Removes all resources to prevent unnecessary AWS charges.
 - **Solution:** Add IAM instance profile and pass to EB module  
 
 **Issue 4:** Custom CloudWatch Metrics not usable by EB  
-- **Solution:** Create external CloudWatch alarms + SNS + scale policies via Terraform  
+- **Solution:** Create external CloudWatch alarms with SNS and scaling policies via Terraform  
 
 **Issue 5:** Insufficient Permissions for CloudWatch Agent  
 - **Solution:** Add EC2 role permissions for `autoscaling:DescribeAutoScalingInstances` and `ec2:DescribeTags`  
